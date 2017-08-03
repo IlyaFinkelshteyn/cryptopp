@@ -6,6 +6,9 @@ version: 1.0.{build}
 clone_depth: 1
 skip_tags: true
 
+init:
+  - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+
 configuration:
 - Debug
 
@@ -29,8 +32,6 @@ test_script:
 
     copy /y TestScripts\cryptest.vcxproj .
 
-    "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x64
-
     msbuild /t:Build /p:platform=%platform%;configuration=%configuration% cryptlib.vcxproj
 
     msbuild /t:Build /p:platform=%platform%;configuration=%configuration% cryptest.vcxproj
@@ -44,3 +45,6 @@ test_script:
 # Right now, we have a few failures that we don't know how to workaround.
 #  - https://stackoverflow.com/questions/43441273/how-to-run-vcupgrade-before-appveyor-build
 #  - https://stackoverflow.com/questions/43423761/cant-perform-64-bit-testing-under-appveyor
+
+on_finish:
+  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
