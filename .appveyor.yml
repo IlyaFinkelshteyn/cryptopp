@@ -29,6 +29,8 @@ test_script:
 
     copy /y TestScripts\cryptest.vcxproj .
 
+    where CL.exe
+
     msbuild /t:Build /p:platform=%platform%;configuration=%configuration% cryptlib.vcxproj
 
     msbuild /t:Build /p:platform=%platform%;configuration=%configuration% cryptest.vcxproj
