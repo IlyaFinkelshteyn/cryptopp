@@ -16,7 +16,7 @@ platform:
 - x64
 
 image:
-- Visual Studio 2015
+- Previous Visual Studio 2015
 
 build: off
 
